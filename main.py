@@ -12,7 +12,7 @@ st.set_page_config(page_title="Credit Card Customers Dashboard",
                    layout="wide")
 
 # Streamlit app
-st.title("Customer Analysis Dashboard")
+st.title("Credit Card Dashboard")
 
 # Filters
 st.sidebar.header("Filter options")
@@ -23,18 +23,30 @@ income_category = st.sidebar.multiselect("Select Income Category:", options=df["
 # Filtered DataFrame
 filtered_df = df[(df["Education_Level"].isin(education_levels)) & (df["Marital_Status"].isin(marital_status)) & (df["Income_Category"].isin(income_category))]
 
-# Customer Attrition Rate
-st.subheader("Customer Attrition Rate")
-attrition_rate = filtered_df["Attrition_Flag"].value_counts(normalize=True) * 100
-st.bar_chart(attrition_rate)
+# KPI: Customer Attrition Rate
+attrition_count = filtered_df["Attrition_Flag"].value_counts()
+attrition_rate = (attrition_count.get("Attrited Customer", 0) / attrition_count.sum()) * 100
 
-# Transaction Volume
-st.subheader("Transaction Volume (Total Transactions Count)")
-st.bar_chart(filtered_df["Total_Trans_Ct"])
+# Display KPIs and plots in three columns
+col1, col2, col3 = st.columns(3)
 
-# Average Ticket Size
-st.subheader("Average Ticket Size (Avg Open To Buy)")
-st.bar_chart(filtered_df["Avg_Open_To_Buy"])
+# Column 1: Customer Attrition Rate
+with col1:
+    st.metric(label="Customer Attrition Rate", value=f"{attrition_rate:.2f}%")
+
+# Column 2: Transaction Volume
+with col2:
+    st.subheader("Transaction Volume (Total Transactions Count)")
+    fig, ax = plt.subplots()
+    sns.histplot(filtered_df["Total_Trans_Ct"], kde=True, ax=ax, color='blue')
+    st.pyplot(fig)
+
+# Column 3: Average Ticket Size
+with col3:
+    st.subheader("Average Ticket Size (Avg Open To Buy)")
+    fig, ax = plt.subplots()
+    sns.histplot(filtered_df["Avg_Open_To_Buy"], kde=True, ax=ax, color='green')
+    st.pyplot(fig)
 
 # Education Level Distribution
 st.subheader("Distribution of Education Levels")
@@ -59,5 +71,3 @@ sns.countplot(data=filtered_df, x='Income_Category', palette='viridis', order=fi
 for p in ax.patches:
     ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()), ha='center', va='baseline', fontsize=12, color='black', xytext=(0, 5), textcoords='offset points')
 st.pyplot(fig)
-
-# Running the app: Save this script as `app.py` and then run `streamlit run app.py` from your command line.
