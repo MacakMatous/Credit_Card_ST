@@ -17,11 +17,6 @@ st.title("Credit Card Dashboard")
 # Filters
 st.sidebar.header("Filter options")
 
-# Add a slider for Months_on_book
-min_months = int(df["Months_on_book"].min())
-max_months = int(df["Months_on_book"].max())
-months_on_book = st.sidebar.slider("Select Months on Book:", min_value=min_months, max_value=max_months, value=(min_months, max_months))
-
 card_category = st.sidebar.multiselect("Select Card Category Level:", options=df["Card_Category"].unique(), default=df["Card_Category"].unique())
 income_category = st.sidebar.multiselect("Select Income Category:", options=df["Income_Category"].unique(), default=df["Income_Category"].unique())
 education_levels = st.sidebar.multiselect("Select Education Level:", options=df["Education_Level"].unique(), default=df["Education_Level"].unique())
@@ -31,8 +26,7 @@ marital_status = st.sidebar.multiselect("Select Marital Status:", options=df["Ma
 filtered_df = df[(df["Card_Category"].isin(card_category)) &
                  (df["Income_Category"].isin(income_category)) &
                  (df["Education_Level"].isin(education_levels)) & 
-                 (df["Marital_Status"].isin(marital_status)) &
-                 (df["Months_on_book"].between(months_on_book[0], months_on_book[1]))
+                 (df["Marital_Status"].isin(marital_status)) 
                 ]
 
 
