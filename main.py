@@ -47,27 +47,3 @@ with col3:
     fig, ax = plt.subplots()
     sns.histplot(filtered_df["Avg_Open_To_Buy"], kde=True, ax=ax, color='green')
     st.pyplot(fig)
-
-# Education Level Distribution
-st.subheader("Distribution of Education Levels")
-fig, ax = plt.subplots()
-sns.countplot(data=filtered_df, x='Education_Level', palette='viridis', order=filtered_df['Education_Level'].value_counts().index, ax=ax)
-for p in ax.patches:
-    ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()), ha='center', va='baseline', fontsize=12, color='black', xytext=(0, 5), textcoords='offset points')
-st.pyplot(fig)
-
-# Marital Status Distribution
-st.subheader("Distribution of Marital Status")
-fig, ax = plt.subplots()
-sns.countplot(data=filtered_df, x='Marital_Status', palette='viridis', order=filtered_df['Marital_Status'].value_counts().index, ax=ax)
-for p in ax.patches:
-    ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()), ha='center', va='baseline', fontsize=12, color='black', xytext=(0, 5), textcoords='offset points')
-st.pyplot(fig)
-
-# Income Category Distribution
-st.subheader("Distribution of Income Categories")
-fig, ax = plt.subplots()
-sns.countplot(data=filtered_df, x='Income_Category', palette='viridis', order=filtered_df['Income_Category'].value_counts().index, ax=ax)
-for p in ax.patches:
-    ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()), ha='center', va='baseline', fontsize=12, color='black', xytext=(0, 5), textcoords='offset points')
-st.pyplot(fig)
