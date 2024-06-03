@@ -64,3 +64,82 @@ with col3:
     ax.set(xlabel='Disponible Income', ylabel='Count')
     sns.histplot(filtered_df["Avg_Open_To_Buy"], kde=True, ax=ax, color='green')
     st.plotly_chart(fig)
+
+st.divider()
+
+col1, col2, col3 = st.columns([1,1,1])
+with col1:
+    plt.figure(figsize=(10, 6))
+    ax = sns.countplot(x='Attrition_Flag', data=filtered_df, palette='viridis', order=filtered_df['Attrition_Flag'].value_counts().index)
+
+    # Add labels and title
+    ax.set_xlabel('Attrition Category', fontsize=12, color='black')
+    ax.set_ylabel('Frequency', fontsize=12, color='black')
+    ax.set_title('Distribution of Customer Categories', fontsize=16, color='black', weight='bold')
+
+    # Customize the tick parameters
+    ax.tick_params(axis='x', colors='black', labelsize=10, rotation=45)
+    ax.tick_params(axis='y', colors='black', labelsize=10)
+
+    # Add counts above the bars
+    for p in ax.patches:
+        ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()),
+                    ha='center', va='baseline', fontsize=10, color='black', xytext=(0, 5),
+                    textcoords='offset points')
+
+    # Customize the background color
+    plt.gcf().set_facecolor('#f5f5f5')
+    ax.set_facecolor('#f5f5f5')
+    st.pyplot(plt.gcf())  # Use plt.gcf() to get the current figure
+
+
+with col2:
+    plt.figure(figsize=(10, 6))
+    ax = sns.countplot(x='Income_Category', data=filtered_df, palette='viridis', order=filtered_df['Income_Category'].value_counts().index)
+
+    # Add labels and title
+    ax.set_xlabel('Income Category', fontsize=12, color='black')
+    ax.set_ylabel('Frequency', fontsize=12, color='black')
+    ax.set_title('Distribution of Income Categories', fontsize=16, color='black', weight='bold')
+
+    # Customize the tick parameters
+    ax.tick_params(axis='x', colors='black', labelsize=10, rotation=45)
+    ax.tick_params(axis='y', colors='black', labelsize=10)
+
+    # Add counts above the bars
+    for p in ax.patches:
+        ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()),
+                    ha='center', va='baseline', fontsize=10, color='black', xytext=(0, 5),
+                    textcoords='offset points')
+
+    # Customize the background color
+    plt.gcf().set_facecolor('#f5f5f5')
+    ax.set_facecolor('#f5f5f5')
+    st.pyplot(plt.gcf())  # Use plt.gcf() to get the current figure
+
+
+with col3:
+    plt.figure(figsize=(10, 6))
+    ax = sns.countplot(x='Total_Relationship_Count', data=filtered_df, palette='viridis', order=filtered_df['Total_Relationship_Count'].value_counts().index)
+
+    # Add labels and title
+    ax.set_xlabel('Relationship Count', fontsize=12, color='black')
+    ax.set_ylabel('Frequency', fontsize=12, color='black')
+    ax.set_title('Number of Services used by Customers', fontsize=16, color='black', weight='bold')
+
+    # Customize the tick parameters
+    ax.tick_params(axis='x', colors='black', labelsize=10, rotation=45)
+    ax.tick_params(axis='y', colors='black', labelsize=10)
+
+    # Add counts above the bars
+    for p in ax.patches:
+        ax.annotate(f'{p.get_height()}', (p.get_x() + p.get_width() / 2., p.get_height()),
+                    ha='center', va='baseline', fontsize=10, color='black', xytext=(0, 5),
+                    textcoords='offset points')
+
+    # Customize the background color
+    plt.gcf().set_facecolor('#f5f5f5')
+    ax.set_facecolor('#f5f5f5')
+    st.pyplot(plt.gcf())  # Use plt.gcf() to get the current figure
+
+st.dataframe(filtered_df)
